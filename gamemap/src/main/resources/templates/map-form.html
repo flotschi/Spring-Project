@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8"/>
+  <title>Title</title>
+
+  <!--Semantic UI-->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.10/semantic.min.css"/>
+  <style>
+    .page {
+      padding: 25px 50px;
+    }
+    .error {
+      color: red;
+    }
+  </style>
+</head>
+<body>
+
+<div class="page">
+
+  <form class="ui form" method="post" th:object="${map}">
+
+    <h1 class="ui dividing header">Map Information</h1>
+
+    <div class="error" th:if="${#fields.hasErrors('*')}">
+      <ul>
+        <li th:each="err : ${#fields.errors('*')}" th:text="${err}"></li>
+      </ul>
+    </div>
+
+    <input type="hidden" th:value="${userId}" name="userId"/>
+
+    <div class="field">
+      <input type="hidden" th:value="${map?.id}" name="id"/>
+      <input type="hidden" th:value="${map?.version}" name="version"/>
+    </div>
+
+    <div class="two fields">
+      <div class="field">
+        <label th:text="#{map.name}">Name</label>
+        <input type="text" th:value="${map?.name}" name="name" th:placeholder="#{map.name}"/>
+      </div>
+
+      <div class="field">
+        <label th:text="#{map.size}">Map Size</label>
+        <select class="ui fluid dropdown" name="size">
+          <option value="SMALL" th:selected="${map?.size == 'SMALL'}">SMALL</option>
+          <option value="MEDIUM" th:selected="${map?.size == 'MEDIUM'}">MEDIUM</option>
+          <option value="LARGE" th:selected="${map?.size == 'LARGE'}">LARGE</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="two fields">
+      <div class="field">
+        <label th:text="#{map.gameMode}">GameMode</label>
+        <select class="ui fluid dropdown" name="gameMode">
+          <option value="DEATH_MATCH" th:selected="${map?.gameMode == 'DEATH_MATCH'}">DEATH_MATCH</option>
+          <option value="SEARCH_AND_DESTROY" th:selected="${map?.gameMode == 'SEARCH_AND_DESTROY'}">SEARCH_AND_DESTROY</option>
+          <option value="FREE_FOR_ALL" th:selected="${map?.gameMode == 'FREE_FOR_ALL'}">FREE_FOR_ALL</option>
+        </select>
+      </div>
+
+      <div class="field">
+        <label th:text="#{map.price}">Price</label>
+        <input type="number" th:value="${map?.price}" name="price" th:placeholder="#{map.price}" />
+      </div>
+    </div>
+
+    <br/>
+    <div class="ui buttons">
+      <a th:href="@{'/user/'+${userId}+'/show/'}" class="ui button">Cancel</a>
+      <div class="or"></div>
+      <button type="submit" class="ui positive button">Save</button>
+    </div>
+
+  </form>
+
+
+</div>
+
+<!--JQuery-->
+<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+<!--Semantic UI-->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.10/semantic.min.js"></script>
+
+</body>
+</html>

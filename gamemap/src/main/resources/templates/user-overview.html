@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8"/>
+  <title>Title</title>
+  <!--Semantic UI-->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.10/semantic.min.css"/>
+  <style>
+    .page {
+      padding: 25px 50px;
+    }
+  </style>
+</head>
+<body>
+
+<div class="page">
+
+  <h1>User Profile</h1>
+
+  <h2 class="ui header">
+    <img src="/img/avatar.png" class="ui circular image"/>
+    <div class="content">
+      <div th:text="${user.nickname}">Username</div>
+      <div class="sub header" th:text="${user.email}">Check out our plug-in marketplace</div>
+    </div>
+  </h2>
+
+  <table class="ui green padded table">
+    <thead>
+    <tr>
+      <th th:text="#{map.name}">Name</th>
+      <th th:text="#{map.table.action}">Action</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="map : ${user.maps}">
+      <td><a th:text="${map.name}" th:href="@{'/user/'+${user.id}+'/map/'+${map.id}+'/update'}">Name</a></td>
+      <td>
+        <form method="post" th:action="@{'/user/'+${user.id}+'/map/'+${map.id}+'/remove'}">
+          <a class="ui positive basic button" th:href="@{'/user/'+${user.id}+'/map/'+${map.id}+'/update'}"
+             th:text="#{map.button.update}">Edit</a>
+          <button class="ui negative basic button" type="submit">Delete</button>
+        </form>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+
+  <a class="positive ui button" th:href="@{'/user/'+${user.id}+'/map/new'}"
+     th:text="#{map.button.create}">Create New</a>
+</div>
+<!--JQuery-->
+<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+<!--Semantic UI-->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.10/semantic.min.js"></script>
+
+</body>
+</html>
